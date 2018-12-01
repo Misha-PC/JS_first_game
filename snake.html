@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<body >
+  <meta charset="utf-8">
+
+  <canvas></canvas>
+
+  <script>
+  var snakePos = [10, 10];
+  var top_old = snakePos[1];
+  var left_old = snakePos[0];
+  var pos_ = snakePos;
+  var ink_ = 10;
+  var size = 5;
+  var snakeColor = ["red", "orange", "yello", "green", "aqua", "blue", "violet"];
+  var colorID = 0;
+  //var chart = canvasJS("container", {});
+  console.log(snakeColor);
+  var cx = document.querySelector("canvas").getContext("2d");
+  cx.lineWidth = 2;
+  function moveRect(e){
+    top_old = snakePos[1];
+    left_old = snakePos[0];
+
+    if(e.keyCode == 37 && snakePos[0]> 10){ //left
+      snakePos[0]-= ink_;
+    }
+    if(e.keyCode == 38 && snakePos[1] > 10){ //up
+      snakePos[1] -=  ink_;
+    }
+    if(e.keyCode == 39 && snakePos[0]< 150){ //right
+      snakePos[0]+=  ink_;
+    }
+    if(e.keyCode == 40 && snakePos[1] < 130){ //down
+
+      snakePos[1] +=  ink_;
+    }
+
+    if (size > 100) {
+      size = 5;
+      colorID += 1;
+    }
+
+    cx.clearRect(0, 0, 600, 600);
+    cx.fillStyle = snakeColor[colorID];
+    cx.fillRect(snakePos[0], snakePos[1], size, size);
+
+    console.log(pos_);
+    console.log(snakePos);
+    if (pos_[0] >= snakePos[0] && pos_[0] <= snakePos[0]+size) {
+      if (pos_[1] >= snakePos[1] && pos_[1] <= snakePos[1]+size) {
+        size += 10;
+        pos_ = randPos();
+      }
+    }
+    cx.fillStyle = "black";
+    cx.fillRect(pos_[0], pos_[1], 10, 10)
+  }
+
+  function randomInteger(min, max) {
+      var rand = min - 0.5 + Math.random() * (max - min + 1)
+      rand = Math.round(rand);
+      return rand;
+  }
+  function randPos() {
+    var arr = [];
+    arr[0] = randomInteger(1, 15) * 10;
+    arr[1] = randomInteger(1, 13) * 10;
+    return arr;
+  }
+  addEventListener("keydown", moveRect);
+</script>
+
+
+</body>
+</html>
+
+<!--
+37 - left
+38 - up
+39 - right
+40 - down
+
+5.1.1
+5.2.1
+-->
